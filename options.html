@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TemizWeb — Ayarlar</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div class="mark" aria-hidden="true">T</div>
+      <div>
+        <h1>TemizWeb ayarları</h1>
+        <p class="subtitle">Filtreler, izleme listesi ve site duraklatmaları buradan yönetilir.</p>
+      </div>
+    </header>
+
+    <p id="error" class="error" role="alert" hidden></p>
+
+    <section class="card" aria-labelledby="filters-title">
+      <h2 id="filters-title">Filtreler</h2>
+
+      <div class="row">
+        <div class="row-copy">
+          <h3>Reklam filtresi</h3>
+          <p>Başlangıç listesindeki reklam ağı alan adlarına yapılan istekleri engeller.</p>
+        </div>
+        <button id="toggle-ads" type="button" class="switch" aria-pressed="false" disabled>Yükleniyor…</button>
+      </div>
+
+      <div class="row">
+        <div class="row-copy">
+          <h3>İzleme/ölçüm filtresi</h3>
+          <p>
+            Analiz, oturum kaydı ve mobil ilişkilendirme alan adlarını engeller.
+            Bazı sitelerin sayaç veya paylaşım düğmeleri bu liste nedeniyle çalışmayabilir.
+          </p>
+        </div>
+        <button id="toggle-tracking" type="button" class="switch" aria-pressed="false" disabled>Yükleniyor…</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="paused-title">
+      <h2 id="paused-title">Duraklatılan siteler</h2>
+      <p class="lead">
+        Duraklatılan bir sitede TemizWeb hiçbir isteği engellemez. Liste yalnızca bu tarayıcıda saklanır.
+      </p>
+
+      <form id="add-site" class="add-form" novalidate>
+        <label class="sr-only" for="site-input">Alan adı</label>
+        <input id="site-input" type="text" name="site" placeholder="ornek.com" autocomplete="off"
+               inputmode="url" spellcheck="false" required>
+        <button id="add-button" type="submit">Ekle</button>
+      </form>
+
+      <ul id="paused-list" class="site-list" aria-live="polite"></ul>
+      <p id="empty-state" class="empty" hidden>Henüz hiçbir site duraklatılmadı.</p>
+
+      <div class="row-actions">
+        <button id="clear-all" type="button" class="ghost" disabled>Tümünü temizle</button>
+        <button id="reset-all" type="button" class="ghost danger" disabled>Ayarları sıfırla</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="info-title">
+      <h2 id="info-title">Filtreler hakkında</h2>
+      <div class="detail-row"><span>Reklam ağı kuralı</span><strong id="ad-rule-count">…</strong></div>
+      <div class="detail-row"><span>İzleme/ölçüm kuralı</span><strong id="tracking-rule-count">…</strong></div>
+      <div class="detail-row"><span>Duraklatılan site</span><strong id="paused-count">…</strong></div>
+      <p class="note">
+        Kurallar alan adı tabanlıdır ve <code>rules/domains.json</code> dosyasından üretilir.
+        Yeni bir alan adı eklemek için önce o alan adının reklam sunumu amacıyla kullanıldığını doğrulayın.
+      </p>
+    </section>
+
+    <footer class="page-footer">
+      TemizWeb sayfa içeriğini okumaz, gezinme geçmişini kaydetmez ve hiçbir yere veri göndermez.
+    </footer>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

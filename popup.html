@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TemizWeb</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="panel">
+    <header class="header">
+      <div class="mark" aria-hidden="true">T</div>
+      <div class="titles">
+        <h1>TemizWeb</h1>
+        <p class="subtitle">Hafif reklam filtresi</p>
+      </div>
+      <span id="status" class="status" role="status">Yükleniyor</span>
+    </header>
+
+    <section class="control" aria-labelledby="control-title">
+      <div class="control-copy">
+        <h2 id="control-title">Filtre durumu</h2>
+        <p id="status-copy">Ayarlar okunuyor…</p>
+      </div>
+      <button id="toggle" type="button" disabled aria-pressed="false">Ayarlar okunuyor…</button>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="site-section" class="site" aria-labelledby="site-title" hidden>
+      <div class="site-copy">
+        <h2 id="site-title">Bu site</h2>
+        <p id="site-name" class="site-host">Algılanamadı</p>
+      </div>
+      <button id="site-toggle" type="button" class="ghost" disabled aria-pressed="false">
+        Filtreyi bu sitede duraklat
+      </button>
+      <p class="hint" id="site-hint" hidden>
+        Duraklatma, yalnızca bu site ve onun alt alan adları için geçerlidir.
+      </p>
+    </section>
+
+    <section class="details" aria-label="Filtre bilgileri">
+      <div class="detail-row"><span>Reklam ağı filtresi</span><strong id="ad-rule-count">Yükleniyor…</strong></div>
+      <div class="detail-row"><span>İzleme/ölçüm filtresi</span><strong id="tracking-rule-count">Yükleniyor…</strong></div>
+      <div class="detail-row"><span>Duraklatılan siteler</span><strong id="paused-count">Yükleniyor…</strong></div>
+      <div class="detail-row"><span>Çalışma şekli</span><strong>Tarayıcı içinde</strong></div>
+      <div class="detail-actions">
+        <a id="open-options" href="options.html" class="link">Ayarları aç</a>
+      </div>
+    </section>
+
+    <footer>
+      <span class="privacy-dot" aria-hidden="true"></span>
+      Tarama geçmişin kaydedilmez veya gönderilmez.
+    </footer>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
