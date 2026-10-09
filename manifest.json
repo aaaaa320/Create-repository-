@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "TemizWeb — Hafif Reklam Filtresi",
+  "version": "2.0.0",
+  "minimum_chrome_version": "101",
+  "description": "Yaygın üçüncü taraf reklam ve izleme alan adlarına yapılan istekleri tarayıcı içinde engeller.",
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "TemizWeb",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_page": "options.html",
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ad_domains",
+        "enabled": true,
+        "path": "rules/ads.json"
+      },
+      {
+        "id": "tracking_domains",
+        "enabled": false,
+        "path": "rules/tracking.json"
+      }
+    ]
+  }
+}
