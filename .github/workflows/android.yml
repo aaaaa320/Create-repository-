@@ -54,13 +54,17 @@ jobs:
       - name: Birim testleri çalıştır
         id: test
         continue-on-error: true
-        run: gradle --no-daemon testDebugUnitTest --console=plain 2>&1 | tee /tmp/gradle-test.log
+        run: |
+          set -o pipefail
+          gradle --no-daemon testDebugUnitTest --console=plain 2>&1 | tee /tmp/gradle-test.log
 
       - name: Hata ayıklama APK'sı derle
         id: assemble
         if: steps.test.outcome == 'success'
         continue-on-error: true
-        run: gradle --no-daemon assembleDebug --console=plain 2>&1 | tee /tmp/gradle-assemble.log
+        run: |
+          set -o pipefail
+          gradle --no-daemon assembleDebug --console=plain 2>&1 | tee /tmp/gradle-assemble.log
 
       - name: APK'yı yükle
         if: steps.assemble.outcome == 'success'
