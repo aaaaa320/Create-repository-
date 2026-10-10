@@ -54,13 +54,12 @@ object DomainNormalizer {
     /** Serbest biçimli bir URL/metin içindeki makine adını çıkarır; bulunamazsa `null`. */
     fun hostnameFromUrl(value: String?): String? {
         if (value.isNullOrEmpty()) return null
-        val candidate = value.trim()
-        val withoutScheme = SCHEME_PATTERN.replace(candidate.lowercase(), candidate)
-        val authority = withoutScheme
+        val candidate = SCHEME_PATTERN.replace(value.trim().lowercase(), "")
+        val authority = candidate
             .substringBefore('/')
             .substringBefore('?')
             .substringBefore('#')
-            .substringAfterLast('@', "")
+            .let { withoutPath -> withoutPath.substringAfterLast('@', withoutPath) }
         return normalizeDomain(authority)
     }
 

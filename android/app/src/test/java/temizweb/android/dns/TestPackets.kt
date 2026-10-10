@@ -18,7 +18,9 @@ object TestPackets {
         writeU16(out, id)
         writeU16(out, 0x0100)                    // RD
         writeU16(out, 1)                         // QDCOUNT
-        writeU16(out, 0); writeU16(out, 0); writeU16(out, 0)
+        writeU16(out, 0)                         // ANCOUNT
+        writeU16(out, 0)                         // NSCOUNT
+        writeU16(out, if (ednsPayload != null) 1 else 0)  // ARCOUNT
         writeName(out, name)
         writeU16(out, type)
         writeU16(out, DnsMessage.CLASS_IN)

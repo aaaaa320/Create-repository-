@@ -61,6 +61,9 @@ class UpstreamServers(context: Context, private val prefs: FilterPrefs) {
         val manager = appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             ?: return emptyList()
 
+        // API 35'te kullanımı önerilmiyor; tüm sürümlerde çalışan tek yol bu olduğu
+        // için uyarı bilinçli olarak susturulur.
+        @Suppress("DEPRECATION")
         val networks = try {
             manager.allNetworks
         } catch (error: RuntimeException) {
