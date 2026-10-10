@@ -16,6 +16,10 @@ on:
       - ".github/workflows/android.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build:
     name: Derleme ve testler
@@ -48,14 +52,55 @@ jobs:
           gradle-version: "8.9"
 
       - name: Birim testleri çalıştır
-        run: gradle --no-daemon testDebugUnitTest
+        id: test
+        continue-on-error: true
+        run: gradle --no-daemon testDebugUnitTest --console=plain 2>&1 | tee /tmp/gradle-test.log
 
       - name: Hata ayıklama APK'sı derle
-        run: gradle --no-daemon assembleDebug
+        id: assemble
+        if: steps.test.outcome == 'success'
+        continue-on-error: true
+        run: gradle --no-daemon assembleDebug --console=plain 2>&1 | tee /tmp/gradle-assemble.log
 
       - name: APK'yı yükle
+        if: steps.assemble.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: temizweb-debug-apk
           path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      # Hata durumunda Gradle çıktısını PR yorumu olarak bırakır; böylece
+      # derleme hataları iş akışı arayüzünden okunabilir.
+      - name: Derleme günlüğünü PR'a raporla
+        if: always() && github.event_name == 'pull_request' && (steps.test.outcome != 'success' || steps.assemble.outcome != 'success')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          TEST_OUTCOME: ${{ steps.test.outcome }}
+          ASSEMBLE_OUTCOME: ${{ steps.assemble.outcome }}
+        run: |
+          {
+            echo "**Gradle sonucu:** test=${TEST_OUTCOME} assemble=${ASSEMBLE_OUTCOME}"
+            echo
+            echo '```text'
+            tail -n 150 /tmp/gradle-test.log 2>/dev/null || true
+            echo '```'
+            echo
+            echo '```text'
+            tail -n 150 /tmp/gradle-assemble.log 2>/dev/null || true
+            echo '```'
+          } > /tmp/report.md
+          python3 -c 'import json; body = open("/tmp/report.md").read(); open("/tmp/payload.json", "w").write(json.dumps({"body": body}))'
+          curl -sS -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --data @/tmp/payload.json
+
+      - name: Sonucu belirle
+        if: steps.test.outcome != 'success' || steps.assemble.outcome != 'success'
+        run: |
+          echo "Gradle adımları başarısız; ayrıntılar PR yorumunda."
+          exit 1
