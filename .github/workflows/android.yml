@@ -1,0 +1,61 @@
+name: Android
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - "rules/**"
+      - "scripts/**"
+      - ".github/workflows/android.yml"
+  pull_request:
+    paths:
+      - "android/**"
+      - "rules/**"
+      - "scripts/**"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Derleme ve testler
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.js kur (varlık derlemesi için)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Alan adı varlıklarının kaynakla eşleştiğini doğrula
+        working-directory: .
+        run: node scripts/build-android-assets.mjs --check
+
+      - name: JDK 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Gradle kur
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Birim testleri çalıştır
+        run: gradle --no-daemon testDebugUnitTest
+
+      - name: Hata ayıklama APK'sı derle
+        run: gradle --no-daemon assembleDebug
+
+      - name: APK'yı yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: temizweb-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

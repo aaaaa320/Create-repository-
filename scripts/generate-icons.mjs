@@ -4,15 +4,18 @@
  * Tasarım: yeşil renkte yuvarlatılmış kare içinde beyaz "T" işareti.
  * Kenar yumuşatma için 2x2 süper örnekleme kullanılır.
  *
+ * `render` ve `toPng` dışa aktarılır; `scripts/generate-android-icons.mjs`
+ * aynı tasarımı Android başlatıcı simgesi boyutlarında yeniden kullanır.
+ *
  * Kullanım: node scripts/generate-icons.mjs
  */
 
 import { deflateSync } from "node:zlib";
 import { writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SIZES = [16, 32, 48, 128];
 
 const GRADIENT_TOP = [22, 168, 117];
@@ -48,7 +51,7 @@ function insideGlyph(x, y, size) {
   return inBar || inStem;
 }
 
-function render(size) {
+export function render(size) {
   const pixels = Buffer.alloc(size * size * 4);
   const radius = size * 0.24;
   const samples = 2;
@@ -115,7 +118,7 @@ function crc32(buffer) {
   return crc ^ -1;
 }
 
-function toPng(size, pixels) {
+export function toPng(size, pixels) {
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(size, 0);
   ihdr.writeUInt32BE(size, 4);
@@ -141,9 +144,20 @@ function toPng(size, pixels) {
   ]);
 }
 
-for (const size of SIZES) {
-  const png = toPng(size, render(size));
-  const file = path.join(ROOT, "icons", `icon${size}.png`);
-  await writeFile(file, png);
-  console.log(`icons/icon${size}.png yazıldı (${png.length} bayt)`);
+/** Simgeleri üretir ve `icons/` klasörüne yazar. */
+export async function generateExtensionIcons() {
+  for (const size of SIZES) {
+    const png = toPng(size, render(size));
+    const file = path.join(ROOT, "icons", `icon${size}.png`);
+    await writeFile(file, png);
+    console.log(`icons/icon${size}.png yazıldı (${png.length} bayt)`);
+  }
+}
+
+const invokedDirectly =
+  process.argv[1] !== undefined &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
+
+if (invokedDirectly) {
+  await generateExtensionIcons();
 }

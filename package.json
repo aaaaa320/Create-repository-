@@ -8,10 +8,13 @@
   "scripts": {
     "build": "node scripts/build-rules.mjs",
     "build:check": "node scripts/build-rules.mjs --check",
+    "build:android": "node scripts/build-android-assets.mjs",
+    "build:android:check": "node scripts/build-android-assets.mjs --check",
     "validate": "node scripts/validate-rules.mjs",
     "icons": "node scripts/generate-icons.mjs",
+    "icons:android": "node scripts/generate-android-icons.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "npm run build:check && npm run validate && npm test"
+    "check": "npm run build:check && npm run build:android:check && npm run validate && npm test"
   },
   "engines": {
     "node": ">=18"
