@@ -3,7 +3,6 @@ package temizweb.android
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.SystemClock
 import temizweb.android.dns.IpPacket
 import temizweb.android.dns.UpstreamDns
@@ -82,13 +81,12 @@ class UpstreamServers(context: Context, private val prefs: FilterPrefs) {
         return emptyList()
     }
 
+    /**
+     * VPN ağları `NET_CAPABILITY_NOT_VPN` yeteneğini taşımaz; kendi tünelimizi
+     * bu eksiklikten tanırız (üst sunucu olarak kendimizi seçmeyiz).
+     */
     private fun isVpnNetwork(capabilities: NetworkCapabilities): Boolean =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VPN)
-        } else {
-            // API 24-25'te VPN yeteneği sorgulanamıyor; tünel adresleri aşağıda elenir.
-            false
-        }
+        !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
 
     private fun isTunnelAddress(address: InetAddress): Boolean =
         address.hostAddress == IpPacket.TUNNEL_IPV4_ADDRESS ||
