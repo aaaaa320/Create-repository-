@@ -89,11 +89,11 @@ jobs:
             echo "**Gradle sonucu:** test=${TEST_OUTCOME} assemble=${ASSEMBLE_OUTCOME}"
             echo
             echo '```text'
-            tail -n 150 /tmp/gradle-test.log 2>/dev/null || true
+            tail -n 400 /tmp/gradle-test.log 2>/dev/null || true
             echo '```'
             echo
             echo '```text'
-            tail -n 150 /tmp/gradle-assemble.log 2>/dev/null || true
+            tail -n 400 /tmp/gradle-assemble.log 2>/dev/null || true
             echo '```'
           } > /tmp/report.md
           python3 -c 'import json; body = open("/tmp/report.md").read(); open("/tmp/payload.json", "w").write(json.dumps({"body": body}))'

@@ -146,7 +146,12 @@ class IpPacketTest {
         stream.write(packet, sourceOffset, addressLength)
         stream.write(packet, sourceOffset + addressLength, addressLength)
         if (ipv6) {
+            // IPv6 sözde başlığı: uzunluk (4) + üç sıfır bayt + sonraki başlık (1).
             writeU32(stream, udpLength.toLong())
+            stream.write(0)
+            stream.write(0)
+            stream.write(0)
+            stream.write(IpPacket.PROTOCOL_UDP)
         } else {
             stream.write(0)
             stream.write(IpPacket.PROTOCOL_UDP)

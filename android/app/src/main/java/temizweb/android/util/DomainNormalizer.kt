@@ -34,7 +34,8 @@ object DomainNormalizer {
         // Şema, yol, sorgu, parça, kullanıcı bilgisi ve portu ayıkla.
         candidate = SCHEME_PATTERN.replace(candidate, "")
         candidate = candidate.substringBefore('/').substringBefore('?').substringBefore('#')
-        candidate = candidate.substringAfterLast('@', "")
+        // "@" yoksa metin olduğu gibi kalır (eksik ayraç değeri olarak kendisini ver).
+        candidate = candidate.substringAfterLast('@', candidate)
         candidate = PORT_PATTERN.replace(candidate, "")
 
         // Joker ve nokta ön eklerini kaldır.

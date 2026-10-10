@@ -79,6 +79,7 @@ object DnsMessage {
         if (qdCount != 1) return null
 
         val name = decodeName(packet, length, HEADER_SIZE) ?: return null
+        if (name.name.isEmpty()) return null              // kök adı sorgusu: filtre konusu değil
         var offset = name.nextOffset
         if (offset + 4 > length) return null
 
@@ -306,9 +307,8 @@ object DnsMessage {
         }
 
         if (nextOffset < 0) return null
-        val name = labels.toString().lowercase()
-        if (name.isEmpty()) return null                   // kök ad: filtre için anlamsız
-        return NameResult(name, nextOffset)
+        // Kök ad ("") OPT kayıtlarında geçerlidir; sorgu adları ayrıca denetlenir.
+        return NameResult(labels.toString().lowercase(), nextOffset)
     }
 
     private fun readRecord(packet: ByteArray, length: Int, start: Int): RecordInfo? {
