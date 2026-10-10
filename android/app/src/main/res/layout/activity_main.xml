@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp">
+
+        <!-- Başlık -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="14dp">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_logo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_subtitle"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Durum kartı -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.TemizWeb.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/status_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle"
+                    android:textSize="20sp"
+                    tools:text="@string/status_running" />
+
+                <TextView
+                    android:id="@+id/status_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary"
+                    tools:text="@string/status_subtitle_running" />
+
+                <TextView
+                    android:id="@+id/error_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/danger_soft"
+                    android:padding="10dp"
+                    android:textColor="@color/danger"
+                    android:visibility="gone"
+                    tools:text="Filtre kurulamadı" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/toggle_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/action_enable" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Filtreler kartı -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.TemizWeb.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_filters_title"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle" />
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingEnd="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_tracking_title"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_tracking_summary"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_tracking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingEnd="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_autostart_title"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_autostart_summary"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_auto_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingEnd="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_ipv6_title"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/switch_ipv6_summary"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_ipv6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/upstream_title"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/upstream_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/upstream_hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/upstream_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Filtre bilgileri kartı -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.TemizWeb.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_lists_title"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle" />
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/row_ad_rules"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                    <TextView
+                        android:id="@+id/count_ads"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                        tools:text="92" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/row_tracking_rules"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                    <TextView
+                        android:id="@+id/count_tracking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                        tools:text="32" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/row_paused"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                    <TextView
+                        android:id="@+id/count_paused"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                        tools:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Widget.TemizWeb.Row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/row_work_mode"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_mode_value"
+                        android:textAppearance="@style/TextAppearance.TemizWeb.RowValue" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/list_source_note"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Duraklatılan siteler kartı -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.TemizWeb.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_paused_title"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/paused_lead"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/paused_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/paused_input_hint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/paused_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:inputType="textUri"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_button"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/action_add" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/paused_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/paused_empty"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+
+                <LinearLayout
+                    android:id="@+id/paused_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/clear_all_button"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_clear_all" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/reset_button"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_reset"
+                        android:textColor="@color/danger" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Sayaçlar kartı -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.TemizWeb.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_stats_title"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.CardTitle" />
+
+                <TextView
+                    android:id="@+id/stats_idle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/stats_idle"
+                    android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/stats_rows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_queries"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_queries"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_blocked_ads"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_blocked_ads"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_blocked_tracking"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_blocked_tracking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_forwarded"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_forwarded"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_cache"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_cache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.TemizWeb.Row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/row_stat_uptime"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowTitle" />
+
+                        <TextView
+                            android:id="@+id/stat_uptime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.TemizWeb.RowValue"
+                            tools:text="0 dk 0 sn" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/footer_privacy"
+            android:textAppearance="@style/TextAppearance.TemizWeb.RowSummary" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Uyarlanabilir simgenin ön katmanı: beyaz T işareti.
+  Sistem ön katmanı kırptığı için işaret güvenli bölgeye (18..90) yerleştirildi.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M22.95,27 H85.05 V44.55 H62.775 V85.05 H45.225 V44.55 H22.95 Z" />
+</vector>

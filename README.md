@@ -2,6 +2,8 @@
 
 TemizWeb, Chromium tabanlı tarayıcılar için hazırlanmış, Manifest V3 kullanan küçük bir reklam ve izleme engelleyicisidir. Seçili üçüncü taraf ağ alan adlarına yapılan istekleri tarayıcının yerleşik `declarativeNetRequest` API'siyle durdurur; sayfa içeriği okunmaz, istekler yorumlanmaz.
 
+Aynı filtrenin **Android sürümü** de bu depodadır: [`android/`](android/README.md) klasöründeki uygulama, aynı alan adı listesiyle cihazın DNS sorgularını yerel bir tünelde denetler. İki sürüm de tek kaynaktan (`rules/domains.json`) beslenir.
+
 ## Özellikler
 
 - **Araç çubuğu penceresinden tek tıkla açma/kapatma** — durum araç çubuğu rozetinde de görünür (`OFF`).
@@ -23,6 +25,19 @@ TemizWeb, Chromium tabanlı tarayıcılar için hazırlanmış, Manifest V3 kull
 5. TemizWeb simgesini araç çubuğuna sabitleyip durumunu açın.
 
 Chrome 101 ve sonrası sürümler hedeflenir (site bazlı duraklatma için `initiatorDomains`/`requestDomains` koşulları gerekir). Firefox'ta test edilmemiştir.
+
+## Android uygulaması
+
+Android'de tarayıcı uzantısı API'leri bulunmadığı için TemizWeb, cihazın DNS sorgularını yerel bir `VpnService` tünelinde filtreler: engellenen alan adlarına `NXDOMAIN` döner, diğer sorguları bağlı olduğunuz ağın kendi DNS sunucusuna iletir. Root gerekmez; reklam/izleme listeleri, izin listesi (duraklatılan siteler), izleme anahtarı ve sayaçlar uzantıyla aynı davranışı korur.
+
+```bash
+cd android
+gradle wrapper --gradle-version 8.9   # ilk kez: sarmalayıcıyı üretir
+./gradlew assembleDebug               # APK üretir
+./gradlew testDebugUnitTest           # birim testler
+```
+
+Mimari, sınırlamalar (ör. DoH atlaması, IPv6'nın isteğe bağlı oluşu) ve gizlilik ayrıntıları için [`android/README.md`](android/README.md) dosyasına bakın. GitHub Actions iş akışı her değişiklikte APK'yı derleyip testleri çalıştırır.
 
 ## Kullanım
 
@@ -51,10 +66,13 @@ Node.js 18+ yeterlidir; bağımlılık yoktur.
 ```bash
 npm run build      # rules/domains.json → rules/ads.json + rules/tracking.json
 npm run build:check # kural dosyalarının kaynakla eşleştiğini doğrular (CI)
+npm run build:android # domains.json → android/app/src/main/assets/*
+npm run build:android:check # Android varlıklarının kaynakla eşleştiğini doğrular (CI)
 npm run validate   # kural dosyalarını doğrular
 npm run icons      # icons/*.png simgelerini yeniden üretir
+npm run icons:android # android/.../mipmap-*/ başlatıcı simgelerini üretir
 npm test           # tüm testleri çalıştırır
-npm run check      # build:check + validate + test
+npm run check      # build:check + build:android:check + validate + test
 ```
 
 ### Kural ekleme veya çıkarma
@@ -87,6 +105,8 @@ rules/tracking.json      Derlenmiş izleme kural kümesi (varsayılan kapalı)
 icons/                   Üretilen uzantı simgeleri
 scripts/                 Kural derleme, doğrulama ve simge üretimi
 tests/                   node:test ile çalışan testler
+android/                 Android uygulaması (yerel DNS filtresi, bkz. android/README.md)
+android/.../assets/      domains.json'dan üretilen alan adı listeleri (elle düzenlenmez)
 ```
 
 ## Testler

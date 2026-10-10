@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uzantının popup.css paletiyle aynı değerler (koyu tema). -->
+<resources>
+    <color name="accent">#16A875</color>
+    <color name="accent_hover">#128F64</color>
+    <color name="accent_soft">#12352A</color>
+    <color name="accent_text">#6FD6A8</color>
+    <color name="background">#121815</color>
+    <color name="surface">#19211D</color>
+    <color name="surface_muted">#151D19</color>
+    <color name="border">#26312B</color>
+    <color name="text_primary">#E8F0EA</color>
+    <color name="text_muted">#9FB0A6</color>
+    <color name="danger">#E08B7E</color>
+    <color name="danger_soft">#33191A</color>
+    <color name="white">#FFFFFF</color>
+</resources>

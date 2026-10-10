@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uzantı simgesiyle aynı işaret: yeşil yuvarlatılmış kare içinde beyaz T. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="44dp"
+    android:height="44dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+    <path android:pathData="M9.6,0 H30.4 A9.6,9.6 0 0 1 40,9.6 V30.4 A9.6,9.6 0 0 1 30.4,40 H9.6 A9.6,9.6 0 0 1 0,30.4 V9.6 A9.6,9.6 0 0 1 9.6,0 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="40"
+                android:endY="40"
+                android:type="linear">
+                <item android:offset="0" android:color="#FF16A875" />
+                <item android:offset="1" android:color="#FF087B5C" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8.5,10 H31.5 V16.5 H23.25 V31.5 H16.75 V16.5 H8.5 Z" />
+</vector>

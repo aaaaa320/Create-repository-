@@ -1,5 +1,29 @@
 # Sürüm notları
 
+## Yayınlanmadı — Android uygulaması
+
+### Yeni özellikler
+
+- `android/`: TemizWeb'in Android sürümü. `VpnService` üzerinde çalışan yerel DNS filtresi; cihazın DNS sorgularını aynı alan adı listesiyle denetler, engellenen alan adlarına `NXDOMAIN` döner, diğerlerini bağlı ağın kendi DNS sunucusuna iletir.
+  - Tek ekranlık Türkçe arayüz (Material 3, koyu tema), kalıcı bildirim ve hızlı ayarlar karosu ile tek dokunuşla aç/kapat.
+  - İzleme/ölçüm anahtarı, duraklatılan siteler (izin listesi, uzantıyla aynı 100 site sınırı ve normalleştirme kuralları), açılışta başlatma ve isteğe bağlı IPv6 DNS desteği.
+  - TTL'e saygılı LRU DNS önbelleği; sayaçlar (sorgu, engellenen, iletilen, önbellek, çalışma süresi) yalnızca toplam tutar, sorgu adlarını saklamaz.
+  - Saf Kotlin DNS/IP katmanı (`dns/DnsMessage`, `dns/IpPacket`, `dns/DnsCache`, `dns/DomainFilter`) ve tünel döngüsü birim testlerle doğrulanır.
+- `scripts/build-android-assets.mjs`: `rules/domains.json` → `android/app/src/main/assets/{ads-domains.txt,tracking-domains.txt,domain-notes.json}`. Uzantı ve Android tek kaynaktan beslenir; `--check` kipi CI için.
+- `scripts/generate-android-icons.mjs`: `mipmap-*/ic_launcher.png` ve `ic_launcher_round.png` (uzantıyla aynı tasarım); API 26+ için `mipmap-anydpi-v26` içinde uyarlanabilir vektör simgeler.
+- `.github/workflows/android.yml`: Android birim testleri + hata ayıklama APK derlemesi; APK iş akışı çıktısı olarak yüklenir.
+
+### Geliştirici deneyimi
+
+- `package.json`: `build:android`, `build:android:check`, `icons:android` betikleri; `check` artık Android varlık eşleşmesini de doğrular.
+- `scripts/generate-icons.mjs`: `render`/`toPng` dışa aktarıldı, betik yalnızca doğrudan çalıştırıldığında yazıyor; Android simge betiği aynı çizimi yeniden kullanıyor.
+- `tests/android-assets.test.mjs`: Android varlıklarının derlenmiş uzantı kurallarıyla birebir eşleştiğini doğrular.
+
+### Belgeler
+
+- `android/README.md`: mimari, derleme adımları, tasarım kararları, sınırlamalar ve gizlilik.
+- Kök `README.md`: Android bölümü, yeni betikler ve dosya düzeni güncellendi.
+
 ## 2.0.0 — 2026-10-09
 
 ### Yeni özellikler

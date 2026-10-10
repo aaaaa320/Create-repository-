@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TemizWeb</string>
+    <string name="app_subtitle">Hafif reklam filtresi</string>
+
+    <!-- Durum kartı -->
+    <string name="status_running">Filtre açık</string>
+    <string name="status_stopped">Filtre kapalı</string>
+    <string name="status_subtitle_running">Cihazın DNS sorguları listeyle denetleniyor; engellenen alan adlarına yanıt verilmiyor.</string>
+    <string name="status_subtitle_stopped">Filtre şu anda devre dışı; sorgular doğrudan ağa gidiyor.</string>
+    <string name="action_enable">Filtreyi aç</string>
+    <string name="action_disable">Filtreyi kapat</string>
+    <string name="error_title">Filtre kurulamadı</string>
+    <string name="vpn_permission_denied">VPN izni verilmedi; filtre başlatılamadı.</string>
+
+    <!-- Filtreler kartı -->
+    <string name="card_filters_title">Filtreler</string>
+    <string name="switch_tracking_title">İzleme/ölçüm filtresi</string>
+    <string name="switch_tracking_summary">Analiz, oturum kaydı ve mobil ilişkilendirme alan adlarını engeller. Bazı sayaçlar ve paylaşım düğmeleri bu liste nedeniyle çalışmayabilir.</string>
+    <string name="switch_autostart_title">Açılışta başlat</string>
+    <string name="switch_autostart_summary">Cihaz açıldığında filtreyi kendiliğinden kurar; VPN izninin daha önce verilmiş olması gerekir.</string>
+    <string name="switch_ipv6_title">IPv6 DNS desteği</string>
+    <string name="switch_ipv6_summary">IPv6 sorgularını da tünelden geçirir. Kapalıyken IPv6 sorguları filtrelenmeden geçer.</string>
+    <string name="upstream_title">Üst DNS sunucuları (isteğe bağlı)</string>
+    <string name="upstream_hint">Boş bırakılırsa bağlı olduğunuz ağın DNS sunucuları kullanılır. Virgülle ayırın; yalnızca IP adresleri kabul edilir.</string>
+    <string name="upstream_error">Geçersiz giriş: yalnızca IP adresleri kabul edilir (örn. 192.168.1.1).</string>
+
+    <!-- Filtre bilgileri kartı -->
+    <string name="card_lists_title">Filtre bilgileri</string>
+    <string name="row_ad_rules">Reklam ağı alan adı</string>
+    <string name="row_tracking_rules">İzleme/ölçüm alan adı</string>
+    <string name="row_paused">Duraklatılan siteler</string>
+    <string name="row_work_mode">Çalışma şekli</string>
+    <string name="work_mode_value">Cihazda, yerel DNS tüneli</string>
+    <string name="list_source_note">Listeler rules/domains.json kaynağından üretilir; elle düzenlenmez.</string>
+
+    <!-- Duraklatılan siteler kartı -->
+    <string name="card_paused_title">Duraklatılan siteler</string>
+    <string name="paused_lead">Duraklatılan bir sitede TemizWeb hiçbir sorguyu engellemez. Liste yalnızca bu cihazda saklanır.</string>
+    <string name="paused_input_hint">ornek.com</string>
+    <string name="action_add">Ekle</string>
+    <string name="paused_empty">Henüz hiçbir site duraklatılmadı.</string>
+    <string name="paused_invalid">Geçersiz alan adı: ornek.com, https://www.ornek.com/haber veya *.ornek.com yazımı kabul edilir.</string>
+    <string name="paused_blocked_note">Reklam listesinde: %1$s</string>
+    <string name="paused_tracking_note">İzleme listesinde: %1$s</string>
+    <string name="action_remove">Kaldır</string>
+    <string name="action_clear_all">Tümünü temizle</string>
+    <string name="action_reset">Ayarları sıfırla</string>
+
+    <!-- Sayaçlar kartı -->
+    <string name="card_stats_title">Bu oturumda</string>
+    <string name="row_stat_queries">Toplam DNS sorgusu</string>
+    <string name="row_stat_blocked_ads">Engellenen (reklam)</string>
+    <string name="row_stat_blocked_tracking">Engellenen (izleme)</string>
+    <string name="row_stat_forwarded">Üst sunucuya iletilen</string>
+    <string name="row_stat_cache">Önbellekten karşılanan</string>
+    <string name="row_stat_uptime">Çalışma süresi</string>
+    <string name="uptime_format">%1$d dk %2$d sn</string>
+    <string name="stats_idle">Filtre kapalıyken sayaç tutulmaz.</string>
+
+    <!-- Alt bilgi -->
+    <string name="footer_privacy">TemizWeb sorgu adlarını kaydetmez veya hiçbir yere göndermez; filtreleme cihazınızda yapılır.</string>
+
+    <!-- Bildirim -->
+    <string name="notification_channel_name">Filtre durumu</string>
+    <string name="notification_channel_description">TemizWeb filtresinin çalıştığını gösteren kalıcı bildirim.</string>
+    <string name="notification_title">TemizWeb çalışıyor</string>
+    <string name="notification_text">%1$d alan adı denetleniyor</string>
+    <string name="action_stop">Durdur</string>
+
+    <!-- Hızlı ayarlar karosu -->
+    <string name="tile_label">TemizWeb</string>
+</resources>
