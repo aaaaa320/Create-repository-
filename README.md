@@ -26,18 +26,20 @@ Aynı filtrenin **Android sürümü** de bu depodadır: [`android/`](android/REA
 
 Chrome 101 ve sonrası sürümler hedeflenir (site bazlı duraklatma için `initiatorDomains`/`requestDomains` koşulları gerekir). Firefox'ta test edilmemiştir.
 
-## Android uygulaması
+## Android uygulaması ve APK
 
-Android'de tarayıcı uzantısı API'leri bulunmadığı için TemizWeb, cihazın DNS sorgularını yerel bir `VpnService` tünelinde filtreler: engellenen alan adlarına `NXDOMAIN` döner, diğer sorguları bağlı olduğunuz ağın kendi DNS sunucusuna iletir. Root gerekmez; reklam/izleme listeleri, izin listesi (duraklatılan siteler), izleme anahtarı ve sayaçlar uzantıyla aynı davranışı korur.
+Android'de tarayıcı uzantısı API'leri bulunmadığı için TemizWeb'in yerel bir Android uygulaması vardır. Uygulama cihazın DNS sorgularını `VpnService` tünelinde filtreler; root gerekmez.
+
+APK'yı Android SDK ve JDK 17 kurulu bilgisayarda üretmek için:
 
 ```bash
 cd android
-gradle wrapper --gradle-version 8.9   # ilk kez: sarmalayıcıyı üretir
-./gradlew assembleDebug               # APK üretir
-./gradlew testDebugUnitTest           # birim testler
+gradle wrapper --gradle-version 8.9   # yalnızca ilk seferde, Gradle Wrapper yoksa
+./gradlew testDebugUnitTest
+./gradlew assembleDebug               # app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Mimari, sınırlamalar (ör. DoH atlaması, IPv6'nın isteğe bağlı oluşu) ve gizlilik ayrıntıları için [`android/README.md`](android/README.md) dosyasına bakın. GitHub Actions iş akışı her değişiklikte APK'yı derleyip testleri çalıştırır.
+APK'yı GitHub Actions'taki **Android** iş akışının son başarılı çalıştırmasından da indirebilirsiniz: **Artifacts → `temizweb-debug-apk`**. APK'yı telefona kurma adımları, gereksinimler ve ayrıntılı yönergeler [`android/README.md`](android/README.md) dosyasındadır.
 
 ## Kullanım
 

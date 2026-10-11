@@ -65,27 +65,63 @@ Saf Kotlin olan parçalar (`dns/*`, `util/*`) Android'siz çalışır ve birim
 testlerle doğrulanır; `DnsTunnel` giriş/çıkış akışlarını dışarıdan aldığı için
 döngü de test edilebilir durumdadır.
 
-## Derleme
+## APK üretme ve telefona yükleme
 
-Gereksinimler: JDK 17, Android SDK (platform 35) ve Gradle 8.9.
+### Gereksinimler
+
+- JDK 17
+- Android SDK Platform 35 (Android Studio'daki **SDK Manager** üzerinden)
+- Gradle 8.9; yalnızca ilk kez Gradle Wrapper üretmek için gerekir
+
+Android Studio SDK'sı `ANDROID_HOME` veya `ANDROID_SDK_ROOT` ile bulunmalıdır.
+
+### APK'yı yerelde üretme
+
+Bu depoda Gradle Wrapper'ın JAR ve başlatıcı dosyaları tutulmaz. Makinede Gradle
+8.9 kuruluysa, depoyu klonladıktan sonra ilk seferde wrapper'ı üretin:
 
 ```bash
 cd android
-
-# İlk kez: sarmalayıcıyı (wrapper) üretin — JAR dosyası depoya konmaz
 gradle wrapper --gradle-version 8.9
-
-./gradlew testDebugUnitTest    # birim testler
-./gradlew assembleDebug        # APK: app/build/outputs/apk/debug/app-debug.apk
 ```
 
-`local.properties` içinde `sdk.dir` tanımlı değilse `ANDROID_HOME` ortam
-değişkeni kullanılır. Yayımlama imzası bilinçli olarak yapılandırılmamıştır;
-kendi anahtarınızla `signingConfig` ekleyin ya da hata ayıklama APK'sını yan
-yükleyin.
+Sonraki derlemelerde:
 
-GitHub Actions iş akışı (`.github/workflows/android.yml`) her değişiklikte
-testleri çalıştırır ve hata ayıklama APK'sını iş akışı çıktısı olarak yükler.
+```bash
+cd android
+./gradlew testDebugUnitTest    # birim testler
+./gradlew assembleDebug        # hata ayıklama APK'sını üretir
+```
+
+APK şu konumda oluşur: `android/app/build/outputs/apk/debug/app-debug.apk`.
+Bu dosya Android'in debug anahtarıyla imzalanır; telefona elle kurup denemek için
+uygundur. Google Play'de yayımlamak için kendi anahtarınızla bir release imzası
+(`signingConfig`) yapılandırmanız gerekir.
+
+### GitHub Actions'tan APK indirme
+
+Derlemeyi yerelde yapmak istemiyorsanız GitHub deposunda **Actions → Android**
+iş akışını açın, son başarılı çalıştırmayı seçin ve **Artifacts** bölümündeki
+`temizweb-debug-apk` dosyasını indirin. ZIP'i açınca `app-debug.apk` çıkar.
+İş akışı testler başarılı olduğunda APK'yı yükler; artefaktlar GitHub tarafından
+90 gün saklanır.
+
+### Android telefona kurma
+
+1. `app-debug.apk` dosyasını telefona kopyalayın veya USB ile aktarın.
+2. Telefonda APK dosyasına dokunun. Android sorarsa, kullandığınız Dosyalar ya da
+tarayıcı uygulaması için **Bu kaynaktan uygulama yüklemeye izin ver** seçeneğini
+   açın ve kurulumu onaylayın.
+3. TemizWeb'i açıp **Filtreyi aç** düğmesine dokunun. Android'in gösterdiği VPN
+   bağlantısı iznini onaylayın; filtre yerel DNS tüneliyle çalışır ve root
+   gerektirmez.
+
+USB hata ayıklama ve Android SDK Platform Tools kuruluysa, depoyu klonladığınız
+bilgisayardan şu komutla da yükleyebilirsiniz:
+
+```bash
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
 
 ### Varlıklar ve simgeler
 
